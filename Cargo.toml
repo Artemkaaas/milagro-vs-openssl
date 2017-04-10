@@ -1,0 +1,9 @@
+[package]
+name = "Milagro_vs_OpenSSL"
+version = "0.1.0"
+authors = ["Artemkaaas <artem.ivanov@dsr-company.com>"]
+
+[dependencies]
+openssl = "0.9.9"
+milagro-crypto = { git = "https://github.com/DSRCorporation/milagro-crypto-rust" }
+time = "0.1"
