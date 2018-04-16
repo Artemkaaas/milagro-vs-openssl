@@ -10,8 +10,10 @@ Some function can take different parameters or return different data.
 if there is not changes for some function, the will be placed word 'same' in the right column.
 
 ### Agent API mapping
+The Agent API was completely deleted from Libindy API but his functionality was simplified and saved as part of Crypto API.
 
-First Header | Second Header
+v1.3.0 | v.1.4.0
 ------------ | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+```indy_crypto_auth_crypt``` | ```indy_prep_msg```
+```indy_prep_anonymous_msg``` | ```indy_crypto_anon_crypt```
+```indy_parse_msg``` | divided into ```indy_crypto_auth_decrypt``` and ```indy_crypto_anon_decrypt```
