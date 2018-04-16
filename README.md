@@ -28,7 +28,7 @@ indy_prep_msg(command_handle: i32,
                      err: ErrorCode,
                      encrypted_msg: *const u8,
                      encrypted_len: u32))
-        </pre>
+              </pre>
     </td>
     <td>
       <pre>
@@ -48,26 +48,28 @@ indy_crypto_auth_crypt(command_handle: i32,
   <tr>
     <td>
       <pre>
-indy_prep_anonymous_msg(command_handle: i32,
-                        recipient_vk: *const c_char,
-                        msg_data: *const u8,
-                        msg_len: u32,
-                        cb: fn(command_handle_: i32,
-                               err: ErrorCode,
-                               encrypted_msg: *const u8,
-                               encrypted_len: u32))
+indy_prep_anonymous_msg(
+          command_handle: i32,
+          recipient_vk: *const c_char,
+          msg_data: *const u8,
+          msg_len: u32,
+          cb: fn(command_handle_: i32,
+                 err: ErrorCode,
+                 encrypted_msg: *const u8,
+                 encrypted_len: u32))
         </pre>
     </td>
     <td>
       <pre>
-indy_crypto_anon_crypt(command_handle: i32,
-                       their_vk: *const c_char,
-                       msg_data: *const u8,
-                       msg_len: u32,
-                       cb: fn(command_handle_: i32,
-                              err: ErrorCode,
-                              encrypted_msg: *const u8,
-                              encrypted_len: u32))
+indy_crypto_anon_crypt(
+          command_handle: i32,
+          their_vk: *const c_char,
+          msg_data: *const u8,
+          msg_len: u32,
+          cb: fn(command_handle_: i32,
+                 err: ErrorCode,
+                 encrypted_msg: *const u8,
+                 encrypted_len: u32))
         </pre>
     </td>
   </tr>
