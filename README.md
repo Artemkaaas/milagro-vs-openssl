@@ -9,11 +9,11 @@ Functions from v1.3.0 are listed in the left column, and the equivalent 1.4.0 fu
 Some function can take different parameters or return different data.
 If there is not any changes for some function, the symbol '=' will be placed in the right column.
 
-### Agent API mapping
-The Agent API was renamed to Did API.
+### Signus API mapping
+The Signus API was renamed to Did API.
 
 <table>  
-  <th>v1.3.0 - Agent API</th>
+  <th>v1.3.0 - Signus API</th>
   <th>v1.4.0 - Crypto API</th>
    <tr>
      <td>
@@ -22,7 +22,7 @@ indy_sign(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b>
+       <b>DELETED</b> <span>(use indy_crypto_sign based on keys instead)</span>
      </td>
    </tr>
    <tr> 
@@ -37,7 +37,7 @@ indy_verify_signature(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b>
+       <b>DELETED</b> <span>(use indy_crypto_verify based on keys instead)</span>
      </td>
    </tr>
    <tr> 
@@ -52,7 +52,7 @@ indy_encrypt(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b>
+       <b>DELETED</b> <span>(use indy_crypto_auth_crypt based on keys instead)</span>
      </td>
    </tr>
    <tr> 
@@ -67,7 +67,7 @@ indy_decrypt(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b>
+       <b>DELETED</b> <span>(use indy_crypto_auth_decrypt based on keys instead)</span>
      </td>
    </tr>
    <tr> 
@@ -82,7 +82,7 @@ indy_encrypt_sealed(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b>
+       <b>DELETED</b> <span>(use indy_crypto_anon_crypt based on keys instead)</span>
      </td>
    </tr>
    <tr> 
@@ -97,7 +97,7 @@ indy_decrypt_sealed(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b>
+       <b>DELETED</b> <span>(use indy_crypto_anon_decrypt based on keys instead)</span>
      </td>
    </tr>
    <tr> 
@@ -320,83 +320,8 @@ indy_get_did_metadata(...)
 ### Crypto API mapping
 
 <table>  
-  <th>v1.3.0 - Agent API</th>
+  <th>v1.3.0 - Crypto API</th>
   <th>v1.4.0 - Crypto API</th>
-  <tr> 
-    <th colspan="2">
-      Creates keys pair and stores in the wallet.
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <pre>
-indy_create_key(...)
-              </pre>
-    </td>
-    <td>
-      <b>=</b>
-    </td>
-  </tr>
-  <tr> 
-    <th colspan="2">
-      Saves/replaces the meta information for the giving key in the wallet.
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <pre>
-indy_set_key_metadata(...)
-              </pre>
-    </td>
-    <td>
-      <b>=</b>
-    </td>
-  </tr>
-  <tr> 
-    <th colspan="2">
-      Retrieves the meta information for the giving key in the wallet.
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <pre>
-indy_get_key_metadata(...)
-              </pre>
-    </td>
-    <td>
-      <b>=</b>
-    </td>
-  </tr>
-  <tr> 
-    <th colspan="2">
-      Signs a message with a key.
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <pre>
-indy_crypto_sign(...)
-              </pre>
-    </td>
-    <td>
-      <b>=</b>
-    </td>
-  </tr>
-  <tr> 
-    <th colspan="2">
-       Verify a signature with a verkey.
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <pre>
-indy_crypto_verify(...)
-              </pre>
-    </td>
-    <td>
-      <b>=</b>
-    </td>
-  </tr>
   <tr> 
     <th colspan="2">
        Encrypt a message by authenticated-encryption scheme.
@@ -542,6 +467,81 @@ indy_crypto_anon_decrypt(
         </pre>
     </td>
   </tr>
+  <tr> 
+      <th colspan="2">
+        Creates keys pair and stores in the wallet.
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <pre>
+  indy_create_key(...)
+                </pre>
+      </td>
+      <td>
+        <b>=</b>
+      </td>
+    </tr>
+    <tr> 
+      <th colspan="2">
+        Saves/replaces the meta information for the giving key in the wallet.
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <pre>
+  indy_set_key_metadata(...)
+                </pre>
+      </td>
+      <td>
+        <b>=</b>
+      </td>
+    </tr>
+    <tr> 
+      <th colspan="2">
+        Retrieves the meta information for the giving key in the wallet.
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <pre>
+  indy_get_key_metadata(...)
+                </pre>
+      </td>
+      <td>
+        <b>=</b>
+      </td>
+    </tr>
+    <tr> 
+      <th colspan="2">
+        Signs a message with a key.
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <pre>
+  indy_crypto_sign(...)
+                </pre>
+      </td>
+      <td>
+        <b>=</b>
+      </td>
+    </tr>
+    <tr> 
+      <th colspan="2">
+         Verify a signature with a verkey.
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <pre>
+  indy_crypto_verify(...)
+                </pre>
+      </td>
+      <td>
+        <b>=</b>
+      </td>
+    </tr>
 </table>
 
 ### Agent API mapping
