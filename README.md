@@ -12,10 +12,37 @@ if there is not changes for some function, the will be placed word 'same' in the
 ### Agent API mapping
 The Agent API was completely deleted from Libindy API but his functionality was simplified and saved as part of Crypto API.
 
-v1.3.0 | v.1.4.0
------------- | -------------
-```indy_prep_msg``` | ```indy_crypto_auth_crypt```
-```indy_prep_anonymous_msg``` | ```indy_crypto_anon_crypt```
-```indy_parse_msg``` | divided into: <ul><li>```indy_crypto_auth_decrypt``` for ```indy_crypto_auth_crypt```</li><li>```indy_crypto_anon_decrypt``` for ```indy_prep_anonymous_msg```</li></ul>
-                                    
-                
+<table>  
+  <th>v1.3.0</th>
+  <th>v1.4.0</th>
+  <tr>
+    <td>
+      <code>pub extern fn indy_prep_msg(command_handle: i32,
+                            wallet_handle: i32,
+                            sender_vk: *const c_char,
+                            recipient_vk: *const c_char,
+                            msg_data: *const u8,
+                            msg_len: u32,
+                            cb: Option<extern fn(command_handle_: i32,
+                                                 err: ErrorCode,
+                                                 encrypted_msg: *const u8,
+                                                 encrypted_len: u32)>) -> ErrorCode
+        </code>
+    </td>
+    <td>
+      <code>
+        pub  extern fn indy_crypto_auth_crypt(command_handle: i32,
+                                              wallet_handle: i32,
+                                              my_vk: *const c_char,
+                                              their_vk: *const c_char,
+                                              msg_data: *const u8,
+                                              msg_len: u32,
+                                              cb: Option<extern fn(command_handle_: i32,
+                                                                   err: ErrorCode,
+                                                                   encrypted_msg: *const u8,
+                                                                   encrypted_len: u32)>) -> ErrorCode
+        </code>
+    </td>
+  </tr>
+</table>                                  
+               
