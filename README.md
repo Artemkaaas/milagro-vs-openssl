@@ -16,7 +16,6 @@ v1.3.0 | v.1.4.0
 ------------ | -------------
 ```indy_prep_msg``` | ```indy_crypto_auth_crypt```
 ```indy_prep_anonymous_msg``` | ```indy_crypto_anon_crypt```
-```indy_parse_msg``` | 
-divided into: <ul><li>```indy_crypto_auth_decrypt``` for ```indy_crypto_auth_crypt```</li><li>```indy_crypto_anon_decrypt``` for ```indy_prep_anonymous_msg```</li></ul>
+```indy_parse_msg``` | divided into: <ul><li>```indy_crypto_auth_decrypt``` for ```indy_crypto_auth_crypt```</li><li>```indy_crypto_anon_decrypt``` for ```indy_prep_anonymous_msg```</li></ul>
                                     
                 
