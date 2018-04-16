@@ -17,31 +17,32 @@ The Agent API was completely deleted from Libindy API but his functionality was 
   <th>v1.4.0</th>
   <tr>
     <td>
-      <code>pub extern fn indy_prep_msg(command_handle: i32,
-                            wallet_handle: i32,
-                            sender_vk: *const c_char,
-                            recipient_vk: *const c_char,
-                            msg_data: *const u8,
-                            msg_len: u32,
-                            cb: Option<extern fn(command_handle_: i32,
-                                                 err: ErrorCode,
-                                                 encrypted_msg: *const u8,
-                                                 encrypted_len: u32)>) -> ErrorCode
-        </code>
+      <pre>
+fn indy_prep_msg(command_handle: i32,
+                 wallet_handle: i32,
+                 sender_vk: *const c_char,
+                 recipient_vk: *const c_char,
+                 msg_data: *const u8,
+                 msg_len: u32,
+                 cb: Option<extern fn(command_handle_: i32,
+                                      err: ErrorCode,
+                                      encrypted_msg: *const u8,
+                                      encrypted_len: u32)>)
+        </pre>
     </td>
     <td>
-      <code>
-        pub  extern fn indy_crypto_auth_crypt(command_handle: i32,
-                                              wallet_handle: i32,
-                                              my_vk: *const c_char,
-                                              their_vk: *const c_char,
-                                              msg_data: *const u8,
-                                              msg_len: u32,
-                                              cb: Option<extern fn(command_handle_: i32,
-                                                                   err: ErrorCode,
-                                                                   encrypted_msg: *const u8,
-                                                                   encrypted_len: u32)>) -> ErrorCode
-        </code>
+      <pre>
+fn indy_crypto_auth_crypt(command_handle: i32,
+                          wallet_handle: i32,
+                          my_vk: *const c_char,
+                          their_vk: *const c_char,
+                          msg_data: *const u8,
+                          msg_len: u32,
+                          cb: Option<extern fn(command_handle_: i32,
+                                               err: ErrorCode,
+                                               encrypted_msg: *const u8,
+                                               encrypted_len: u32)>)
+        </pre>
     </td>
   </tr>
 </table>                                  
