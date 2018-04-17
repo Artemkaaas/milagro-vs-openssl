@@ -3,14 +3,10 @@
 ## A Developer Guide for Libindy migration
 
 There are a lot APIs that have been changed in Libindy 1.4.0.
-This document is written for developers using Libindy 1.3.0 to provide necessary information 
-to simplify transition and to introduce to new features of Libindy 1.4.0.
+This document is written for developers using Libindy 1.3.0 to provide necessary information and
+to simplify their transition to API of Libindy 1.4.0.
 
-In the following tables for each Libindy API part, there are mappings of how 1.3.0 functionality maps to 1.4.0. 
-Functions from v1.3.0 are listed in the left column, and the equivalent 1.4.0 function are placed in the right column. 
-Some function were whether added or deleted or can take different parameters or return different data.
-If there is not any changes for some function, the symbol '=' will be placed in the right column.
-
+* [Notes](#notes)
 * [Anoncreds API](#anoncreds-api-mapping)
 * [Ledger API](#ledger-api-mapping)
 * [Signus API](#signus-api-mapping)
@@ -19,12 +15,24 @@ If there is not any changes for some function, the symbol '=' will be placed in 
 * [Pairwise API](#pairwise-api-mapping)
 * [Pool API](#pool-api-mapping)
 * [Wallet API](#wallet-api-mapping)
+* [Wallet API](#wallet-api-mapping)
+* [Explore the Code](#explore-the-code)
+
+### Notes
+
+In the following tables, there are mappings for each Libindy API part of how 1.3.0 functionality maps to 1.4.0. 
+
+Functions from v1.3.0 are listed in the left column, and the equivalent 1.4.0 function is placed in the right column. 
+
+* If some function had been added, the word 'NEW' would be placed in the left column.
+* If some function had been deleted, the word 'DELETED' would be placed in the right column.
+* If some function had been changed, the current format would be placed in the right column.
+* If some function had not been changed, the symbol '=' would be placed in the right column.
+* To get more details about current format of a function click on the description above it.
 
 
 ### Anoncreds API mapping
-Anoncreds API is the most affected part of Libindy. 
-
-The full Anoncreds design can be found here: 
+Anoncreds API is the most affected part of Libindy. The complete design of Anoncreds can be found [here](https://github.com/hyperledger/indy-sdk/tree/master/doc/design/anoncreds).
 
 There are three main types of changes:
 * Improved support of Revocation 
@@ -1905,3 +1913,10 @@ The Pool API does not have any changes.
 
 ### Wallet API mapping
 The Wallet API does not have any changes.
+
+### Explore the Code
+Here you can find integration tests that demonstrates basic revocation scenario using the Libindy and Ledger:
+* [Rust](https://github.com/hyperledger/indy-sdk/blob/master/libindy/tests/interaction.rs)
+* [Java](https://github.com/hyperledger/indy-sdk/blob/master/wrappers/java/src/test/java/org/hyperledger/indy/sdk/interaction/AnoncredsRevocationInteractionTest.java)
+* [Pyton](https://github.com/hyperledger/indy-sdk/blob/master/wrappers/python/tests/interation/interaction.py)
+* [XCode](https://github.com/hyperledger/indy-sdk/blob/master/wrappers/ios/libindy-pod/Indy-demoTests/Demo%20Tests/Interaction.mm)
