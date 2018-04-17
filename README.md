@@ -21,7 +21,6 @@ If there is not any changes for some function, the symbol '=' will be placed in 
 * [Wallet API](#wallet-api-mapping)
 
 
-
 ### Anoncreds API mapping
 Anoncreds API is the most affected part of Libindy. 
 
@@ -40,7 +39,9 @@ There are three main types of changes:
   <th>v1.4.0 - Anoncreds API</th>
   <tr> 
     <th colspan="2">
-Issuer create credential schema    
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L15">
+            Issuer create Credential Schema
+        </a>
     </th>
   </tr>
   <tr>
@@ -64,7 +65,9 @@ indy_issuer_create_schema(
   </tr>
   <tr> 
     <th colspan="2">
-Issuer create credential definition for the given Schema
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L73">
+            Issuer create Credential Definition for the given Schema
+        </a>
     </th>
   </tr>
   <tr>
@@ -101,7 +104,9 @@ indy_issuer_create_and_store_credential_def(
   </tr>
   <tr> 
     <th colspan="2">
-Issuer create a new revocation registry for the given Credential Definition 
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L142">
+            Issuer create a new revocation registry for the given Credential Definition 
+        </a>
     </th>
   </tr>
   <tr>
@@ -139,8 +144,10 @@ indy_issuer_create_and_store_revoc_reg(
   </tr>
   <tr> 
     <th colspan="2">
-Issuer create credential offer
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L230">
+            Issuer create credential offer
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -160,8 +167,10 @@ indy_issuer_create_credential_offer(
   </tr>
   <tr> 
     <th colspan="2">
-Issuer issue Credential for the given Credential Request
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L280">
+            Issuer issue Credential for the given Credential Request
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -198,8 +207,10 @@ indy_issuer_create_credential(
   </tr>
   <tr> 
     <th colspan="2">
-Issuer revoke a credential
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L368">
+            Issuer revoke a credential
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -231,8 +242,10 @@ indy_issuer_revoke_credential(
   </tr>
   <tr> 
     <th colspan="2">
-Issuer merge two revocation registry deltas
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L476">
+            Issuer merge two revocation registry deltas
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -252,7 +265,7 @@ indy_issuer_merge_revocation_registry_deltas(
   </tr>
   <tr> 
     <th colspan="2">
-Prover stores a claim offer from the given issuer in a secure storage.
+Prover stores a Claim Offer from the given issuer in a secure storage.
    </th>
   </tr>
   <tr>
@@ -272,7 +285,7 @@ indy_prover_store_claim_offer(
   </tr>
   <tr> 
     <th colspan="2">
-Prover gets all stored claim offers
+Prover gets all stored Claim Offers
    </th>
   </tr>
   <tr>
@@ -293,8 +306,10 @@ indy_prover_get_claim_offers(
   </tr>
   <tr> 
     <th colspan="2">
-Prover creates a master secret
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L518">
+            Prover creates a Master Secret
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -321,8 +336,10 @@ indy_prover_create_master_secret(
   </tr>
   <tr> 
     <th colspan="2">
-Prover creates a Credential Request for the given credential offer
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L559">
+            Prover creates a Credential Request for the given Credential Offer
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -357,8 +374,10 @@ indy_prover_create_credential_req(
   </tr>
   <tr> 
     <th colspan="2">
-Prover stores Credential in a secure wallet
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L627">
+            Prover stores Credential in a secure wallet
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -390,8 +409,10 @@ indy_prover_store_credential(
   </tr>
   <tr> 
     <th colspan="2">
-Prover gets human readable claims according to the filter
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L689">
+            Prover gets human readable claims according to the filter
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -406,7 +427,6 @@ indy_prover_get_claims(
         </pre>
     </td>
     <td>
-<b>The formats of input filter and output credentials were changed</b>
       <pre>
 indy_prover_get_credentials(
         command_handle: i32,
@@ -420,8 +440,10 @@ indy_prover_get_credentials(
   </tr>
   <tr> 
     <th colspan="2">
-Prover gets human readable credentials matching the given proof request.
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L748">
+            Prover gets human readable credentials matching the given proof request
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -449,8 +471,10 @@ indy_prover_get_credentials_for_proof_req(
   </tr>
   <tr> 
     <th colspan="2">
-Prover creates a proof according to the given proof request
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L856">
+            Prover creates a proof according to the given proof request
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -488,8 +512,10 @@ indy_prover_create_proof(
   </tr>
   <tr> 
     <th colspan="2">
-Verifier verifies a proof
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L1029">
+            Verifier verifies a proof
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -524,8 +550,10 @@ indy_verifier_verify_proof(
   </tr>
   <tr> 
     <th colspan="2">
-Create revocation state for a credential in the particular time moment.
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L1152">
+            Create revocation state for a credential in the particular time moment
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -548,8 +576,10 @@ indy_create_revocation_state(
   </tr>
   <tr> 
     <th colspan="2">
-Create new revocation state for a credential based on existed state at the particular time moment
-   </th>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/anoncreds.rs#L1208">
+            Create new revocation state for a credential based on existed
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -576,17 +606,19 @@ indy_update_revocation_state(
 
 ### Ledger API mapping
 There are four types of changes in Ledger API:
-** Added new transaction builders for Revocation support
-** Added new transaction builders for Node support
-** Added parsers of transaction responses related to Anoncreds API
-** Changed format of some transaction builders
+* Added new transaction builders for Revocation support
+* Added new transaction builders for Node support
+* Added parsers of transaction responses related to Anoncreds API
+* Changed format of some transaction builders
 
 <table>  
   <th>v1.3.0 - Ledger API</th>
   <th>v1.4.0 - Ledger API</th>
   <tr> 
     <th colspan="2">
-      Builds a SCHEMA request. Request to add Credential's schema.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L374">
+            Builds a SCHEMA request. Request to add Credential's schema
+        </a>
     </th>
   </tr>
   <tr>
@@ -616,7 +648,9 @@ Left the same but the format of data has been changed to:
   </tr>
   <tr> 
     <th colspan="2">
-      Builds a GET_SCHEMA request. Request to get Credential's Schema.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L418">
+            Builds a GET_SCHEMA request. Request to get Credential's Schema
+        </a>
     </th>
   </tr>
   <tr>
@@ -646,7 +680,9 @@ indy_build_get_schema_request(
   </tr>
   <tr> 
     <th colspan="2">
-      Parse a GET_SCHEMA response to get Schema in the format compatible with Anoncreds API.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L455">
+            Parse a GET_SCHEMA response to get Schema in the format compatible with Anoncreds API
+        </a>
     </th>
   </tr>
   <tr>
@@ -667,7 +703,9 @@ indy_parse_get_schema_response(
   </tr>
   <tr> 
     <th colspan="2">
-Builds an CRED_DEF request. Request to add a Credential Definition.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L497">
+            Builds an CRED_DEF request. Request to add a Credential Definition
+        </a>
     </th>
   </tr>
   <tr>
@@ -698,7 +736,9 @@ indy_build_cred_def_request(
   </tr>
   <tr> 
     <th colspan="2">
-Builds a GET_CRED_DEF request. Request to get a Credential Definition.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L546">
+            Builds a GET_CRED_DEF request. Request to get a Credential Definition
+        </a>
     </th>
   </tr>
   <tr>
@@ -728,9 +768,12 @@ indy_build_get_cred_def_request(
     </td>
   </tr>
   <tr> 
-    <th colspan="2">
-Parse a GET_CRED_DEF response to get Credential Definition in the format compatible with Anoncreds API.    </th>
   </tr>
+    <th colspan="2">
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L584">
+            Parse a GET_CRED_DEF response to get Credential Definition in the format compatible with Anoncreds API
+        </a>
+    </th>
   <tr>
     <td>
         <b>NEW</b>
@@ -749,8 +792,10 @@ indy_parse_get_cred_def_response(
   </tr>
   <tr> 
     <th colspan="2">
-Builds a POOL_CONFIG request. Request to change Pool's configuration.
-  </tr>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L715">
+            Builds a POOL_CONFIG request. Request to change Pool's configuration
+        </a>
+    </th>
   <tr>
     <td>
         <b>NEW</b>
@@ -770,7 +815,10 @@ indy_build_pool_config_request(
   </tr>
   <tr> 
     <th colspan="2">
-Builds a POOL_UPGRADE request. Request to upgrade the Pool (sent by Trustee)
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L796">
+            Builds a POOL_UPGRADE request. Request to upgrade the Pool (sent by Trustee)
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -798,7 +846,10 @@ indy_build_pool_upgrade_request(
   </tr>
   <tr> 
     <th colspan="2">
-Builds a REVOC_REG_DEF request. Request to add the definition of revocation registry to an exists Credential Definition.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L868">
+            Builds a REVOC_REG_DEF request. Request to add the definition of revocation registry to an exists Credential Definition
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -816,9 +867,12 @@ indy_build_revoc_reg_def_request(
               </pre>
     </td>
   </tr>
-  <tr> 
+  <tr>  
     <th colspan="2">
-Builds a GET_REVOC_REG_DEF request. Request to get a Revocation Registry Definition  
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L920">
+            Builds a GET_REVOC_REG_DEF request. Request to get a Revocation Registry Definition 
+        </a>
+    </th>
   </tr>
   <tr>
     <td>
@@ -837,8 +891,11 @@ indy_build_get_revoc_reg_def_request(
     </td>
   </tr> 
   <tr> 
-    <th colspan="2">
-Parse a GET_REVOC_REG_DEF response to get Revocation Registry Definition in the format compatible with Anoncreds API.  </tr>
+      <th colspan="2">
+          <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L958">
+            Parse a GET_REVOC_REG_DEF response to get Revocation Registry Definition in the format compatible with Anoncreds API.  </tr>
+          </a>
+      </th>
   <tr>
     <td>
         <b>NEW</b>
@@ -857,7 +914,10 @@ indy_parse_get_revoc_reg_def_response(
   </tr> 
   <tr> 
     <th colspan="2">
-Builds a REVOC_REG_ENTRY request.  Request to add the Revocation Registry Entry record containing the new accumulator value and issued/revoked indices.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L1008">
+            Builds a REVOC_REG_ENTRY request.  Request to add the Revocation Registry Entry record containing the new accumulator value and issued/revoked indices.
+        </a>
+    </th>
   <tr>
     <td>
         <b>NEW</b>
@@ -878,7 +938,10 @@ indy_build_revoc_reg_entry_request(
   </tr>
   <tr> 
     <th colspan="2">
-Builds a GET_REVOC_REG request. Request to get the accumulated state of the Revocation Registry in a particular time
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L1065">
+            Builds a GET_REVOC_REG request. Request to get the accumulated state of the Revocation Registry in a particular time
+        </a>
+    </th>
   <tr>
     <td>
         <b>NEW</b>
@@ -898,7 +961,10 @@ indy_build_get_revoc_reg_request(
   </tr>
   <tr> 
     <th colspan="2">
-Parse a GET_REVOC_REG response to get Revocation Registry in the format compatible with Anoncreds API.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L1106">
+            Parse a GET_REVOC_REG response to get Revocation Registry in the format compatible with Anoncreds API
+        </a>
+    </th>
   <tr>
     <td>
         <b>NEW</b>
@@ -918,7 +984,11 @@ indy_parse_get_revoc_reg_response(
   </tr>
   <tr> 
     <th colspan="2">
-Builds a GET_REVOC_REG_DELTA request. Request to get the delta of the accumulated state of the Revocation Registry.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L1148">
+            Builds a GET_REVOC_REG_DELTA request. Request to get the delta of the accumulated state of the Revocation Registry.
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
         <b>NEW</b>
@@ -939,7 +1009,11 @@ indy_build_get_revoc_reg_delta_request(
   </tr>
   <tr> 
     <th colspan="2">
-Parse a GET_REVOC_REG_DELTA response to get Revocation Registry Delta in the format compatible with Anoncreds API.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L1195">
+            Parse a GET_REVOC_REG_DELTA response to get Revocation Registry Delta in the format compatible with Anoncreds API.
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
         <b>NEW</b>
@@ -959,7 +1033,11 @@ indy_parse_get_revoc_reg_delta_response(
   </tr>
   <tr> 
     <th colspan="2">
-Signs and submits request message to validator pool.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L11">
+            Signs and submits request message to validator pool
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -972,7 +1050,11 @@ indy_sign_and_submit_request(...)
   </tr>
   <tr> 
     <th colspan="2">
-Send request message to validator pool
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L61">
+            Send request message to validator pool
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -985,7 +1067,11 @@ indy_submit_request(...)
   </tr>
   <tr> 
     <th colspan="2">
-Signs request message
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L100">
+            Signs request message
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -998,7 +1084,11 @@ indy_sign_request(...)
   </tr>
   <tr> 
     <th colspan="2">
-Builds a NYM request. Request to create a new NYM record for a specific user.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L185">
+            Builds a NYM request. Request to create a new NYM record for a specific user.
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -1009,9 +1099,13 @@ indy_build_nym_request(...)
       <b>=</b>
     </td>
   </tr>
-  <tr> 
+  <tr>
     <th colspan="2">
-Builds a GET_NYM request. Request to get information about a DID (NYM).
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L337">
+            Builds a GET_NYM request. Request to get information about a DID (NYM).
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -1022,9 +1116,13 @@ indy_build_get_nym_request(...)
       <b>=</b>
     </td>
   </tr>
-  <tr> 
+  <tr>
     <th colspan="2">
-Builds an ATTRIB request. Request to add attribute to a NYM record.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L239">
+            Builds an ATTRIB request. Request to add attribute to a NYM record.
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -1035,9 +1133,13 @@ indy_build_attrib_request(...)
       <b>=</b>
     </td>
   </tr>
-  <tr> 
+  <tr>
     <th colspan="2">
-Builds a GET_ATTRIB request. Request to get information about an Attribute for the specified DID.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L288">
+            Builds a GET_ATTRIB request. Request to get information about an Attribute for the specified DID.
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -1048,9 +1150,13 @@ indy_build_get_attrib_request(...)
       <b>=</b>
     </td>
   </tr>
-  <tr> 
+  <tr>
     <th colspan="2">
-Builds a NODE request. Request to add a new node to the pool, or updates existing in the pool.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L630">
+            Builds a NODE request. Request to add a new node to the pool, or updates existing in the pool.
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -1061,9 +1167,13 @@ indy_build_node_request(...)
       <b>=</b>
     </td>
   </tr>
-  <tr> 
+  <tr>
     <th colspan="2">
-Builds a GET_TXN request. Request to get any transaction by its seq_no.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/ledger.rs#L679">
+            Builds a GET_TXN request. Request to get any transaction by its seq_no.
+        </a>
+    </th>
+  </tr>
   <tr>
     <td>
       <pre>
@@ -1176,9 +1286,11 @@ indy_decrypt_sealed(...)
      </td>
    </tr>
    <tr> 
-     <th colspan="2">
-         Get info about My DID in format: DID, verkey, metadata
-     </th>
+    <th colspan="2">
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L460">
+            Get info about My DID in format: DID, verkey, metadata
+        </a>
+    </th>
    </tr>
    <tr>
      <td>
@@ -1196,9 +1308,11 @@ indy_get_my_did_with_meta(command_handle: i32,
      </td>
    </tr>
    <tr> 
-     <th colspan="2">
-         Lists created DIDs with metadata as JSON array with each DID in format: DID, verkey, metadata
-     </th>
+    <th colspan="2">
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L484">
+            Lists created DIDs with metadata as JSON array with each DID in format: DID, verkey, metadata
+        </a>
+    </th>
    </tr>
    <tr>
      <td>
@@ -1215,9 +1329,11 @@ indy_list_my_dids_with_meta(command_handle: i32,
      </td>
    </tr>
    <tr> 
-     <th colspan="2">
-        Retrieves abbreviated verkey if it is possible otherwise return full verkey.
-     </th>
+    <th colspan="2">
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L505">
+            Retrieves abbreviated verkey if it is possible otherwise return full verkey.
+        </a>
+    </th>
    </tr>
    <tr>
      <td>
@@ -1236,7 +1352,9 @@ indy_abbreviate_verkey(command_handle: i32,
    </tr>
   <tr> 
     <th colspan="2">
-      Creates key for a new DID
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L13">
+            Creates key for a new DID
+        </a>
     </th>
   </tr>
   <tr>
@@ -1251,7 +1369,9 @@ indy_create_and_store_my_did(...)
   </tr>
   <tr> 
     <th colspan="2">
-      Generated temporary key for an existing DID.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L67">
+            Generated temporary key for an existing DID.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1266,7 +1386,9 @@ indy_replace_keys_start(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Apply temporary key as main for an existing DID 
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L114">
+            Apply temporary key as main for an existing DID 
+        </a>
     </th>
   </tr>
   <tr>
@@ -1281,7 +1403,9 @@ indy_replace_keys_apply(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Saves their DID for a pairwise connection in a secured Wallet
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L147">
+            Saves their DID for a pairwise connection in a secured Wallet
+        </a>
     </th>
   </tr>
   <tr>
@@ -1296,7 +1420,9 @@ indy_store_their_did(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Returns ver key (key id) for the given DID.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L188">
+            Returns ver key (key id) for the given DID.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1312,7 +1438,9 @@ indy_key_for_did(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Returns ver key (key id) for the given DID.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L244">
+            Returns ver key (key id) for the given DID.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1327,7 +1455,9 @@ indy_key_for_local_did(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Set/replace endpoint information for the given DID.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L296">
+            Set/replace endpoint information for the given DID.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1342,7 +1472,9 @@ indy_set_endpoint_for_did(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Gets endpoint information for the given DID.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L344">
+            Gets endpoint information for the given DID.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1357,7 +1489,9 @@ indy_get_endpoint_for_did(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Saves/replaces the meta information for the giving DID in the wallet.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L373">
+            Saves/replaces the meta information for the giving DID in the wallet.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1372,7 +1506,9 @@ indy_set_did_metadata(...)
   </tr>
   <tr> 
     <th colspan="2">
-        Retrieves the meta information for the giving DID in the wallet.    
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/did.rs#L417">
+            Retrieves the meta information for the giving DID in the wallet.    
+        </a>
     </th>
   </tr>
   <tr>
@@ -1385,11 +1521,6 @@ indy_get_did_metadata(...)
       <b>=</b>
     </td>
   </tr>
-   <tr> 
-     <th colspan="2">
-         Signs a message by a signing key associated with my DID
-     </th>
-   </tr>
 </table> 
     
 ### Crypto API mapping
@@ -1399,7 +1530,9 @@ indy_get_did_metadata(...)
   <th>v1.4.0 - Crypto API</th>
   <tr> 
     <th colspan="2">
-       Encrypt a message by authenticated-encryption scheme.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L243">
+           Encrypt a message by authenticated-encryption scheme.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1437,7 +1570,9 @@ indy_crypto_auth_crypt(
   </tr>
   <tr> 
     <th colspan="2">
-       Decrypt a message by authenticated-encryption scheme.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L303">
+           Decrypt a message by authenticated-encryption scheme.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1476,7 +1611,9 @@ indy_crypto_auth_decrypt(
   </tr>
   <tr> 
     <th colspan="2">
-       Encrypts a message by anonymous-encryption scheme.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L360">
+           Encrypts a message by anonymous-encryption scheme.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1509,7 +1646,9 @@ indy_crypto_anon_crypt(
   </tr>
   <tr> 
     <th colspan="2">
-       Decrypts a message by anonymous-encryption scheme.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L411">
+           Decrypts a message by anonymous-encryption scheme.
+        </a>
     </th>
   </tr>
   <tr>
@@ -1543,10 +1682,12 @@ indy_crypto_anon_decrypt(
     </td>
   </tr>
   <tr> 
-      <th colspan="2">
-        Creates keys pair and stores in the wallet.
-      </th>
-    </tr>
+    <th colspan="2">
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L13">
+            Creates keys pair and stores in the wallet.
+        </a>
+    </th>
+  </tr>
     <tr>
       <td>
         <pre>
@@ -1559,7 +1700,9 @@ indy_crypto_anon_decrypt(
     </tr>
     <tr> 
       <th colspan="2">
-        Saves/replaces the meta information for the giving key in the wallet.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L59">
+            Saves/replaces the meta information for the giving key in the wallet.
+        </a>
       </th>
     </tr>
     <tr>
@@ -1574,7 +1717,9 @@ indy_crypto_anon_decrypt(
     </tr>
     <tr> 
       <th colspan="2">
-        Retrieves the meta information for the giving key in the wallet.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L103">
+              Retrieves the meta information for the giving key in the wallet.
+        </a>
       </th>
     </tr>
     <tr>
@@ -1589,7 +1734,9 @@ indy_crypto_anon_decrypt(
     </tr>
     <tr> 
       <th colspan="2">
-        Signs a message with a key.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L146">
+              Signs a message with a key.
+        </a>
       </th>
     </tr>
     <tr>
@@ -1604,7 +1751,9 @@ indy_crypto_anon_decrypt(
     </tr>
     <tr> 
       <th colspan="2">
-         Verify a signature with a verkey.
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/crypto.rs#L193">
+               Verify a signature with a verkey.
+        </a>
       </th>
     </tr>
     <tr>
