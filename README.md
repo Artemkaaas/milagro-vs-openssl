@@ -7,15 +7,16 @@ This document is written for developers using Libindy 1.3.0 to provide necessary
 to simplify their transition to API of Libindy 1.4.0.
 
 * [Notes](#notes)
-* [Anoncreds API](#anoncreds-api-mapping)
-* [Ledger API](#ledger-api-mapping)
-* [Signus API](#signus-api-mapping)
-* [Crypto API](#crypto-api-mapping)
-* [Agent API](#agent-api-mapping)
-* [Pairwise API](#pairwise-api-mapping)
-* [Pool API](#pool-api-mapping)
-* [Wallet API](#wallet-api-mapping)
-* [Wallet API](#wallet-api-mapping)
+* [Api]()
+    * [Anoncreds API](#anoncreds-api-mapping)
+    * [Ledger API](#ledger-api-mapping)
+    * [Signus API](#signus-api-mapping)
+    * [Crypto API](#crypto-api-mapping)
+    * [Blob Storage API](#blob-storage-api-mapping)
+    * [Agent API](#agent-api-mapping)
+    * [Pairwise API](#pairwise-api-mapping)
+    * [Pool API](#pool-api-mapping)
+    * [Wallet API](#wallet-api-mapping)
 * [Explore the Code](#explore-the-code)
 
 ### Notes
@@ -101,7 +102,7 @@ indy_issuer_create_and_store_credential_def(
         issuer_did: *const c_char,
         schema_json: *const c_char,
         tag: *const c_char,
-        type_: *const c_char,
+        signature_type: *const c_char,
         config_json: *const c_char,
         cb: fn(xcommand_handle: i32, 
                err: ErrorCode,
@@ -137,7 +138,7 @@ indy_issuer_create_and_store_revoc_reg(
         command_handle: i32,
         wallet_handle: i32,
         issuer_did: *const c_char,
-        type_: *const c_char,
+        revoc_def_type: *const c_char,
         tag: *const c_char,
         cred_def_id: *const c_char,
         config_json: *const c_char,
@@ -162,15 +163,14 @@ indy_issuer_create_and_store_revoc_reg(
         <b>NEW</b>
     </td>
     <td>
-      <pre>
-indy_issuer_create_credential_offer(
+      <pre>indy_issuer_create_credential_offer(
         command_handle: i32,
         wallet_handle: i32,
         cred_def_id: *const c_char,
         cb: fn(xcommand_handle: i32, 
                err: ErrorCode,
-               cred_offer_json: *const c_char))
-        </pre>
+               cred_offer_json: *const c_char))</pre>
+      <b>Note</b>: The format of Credential Offer was changed
     </td>
   </tr>
   <tr> 
@@ -211,6 +211,7 @@ indy_issuer_create_credential(
                cred_revoc_id: *const c_char,
                revoc_reg_delta_json: *const c_char))
         </pre>
+      <b>Note</b>: The format of Credential was changed
     </td>
   </tr>
   <tr> 
@@ -378,6 +379,7 @@ indy_prover_create_credential_req(
                cred_req_json: *const c_char,
                cred_req_metadata_json: *const c_char))
         </pre>
+        <b>Note</b>: The format of Credential Request was changed
     </td>
   </tr>
   <tr> 
@@ -444,6 +446,7 @@ indy_prover_get_credentials(
                err: ErrorCode,
                matched_credentials_json: *const c_char))
         </pre>
+        <b>Note</b>: The formats of Filter and Matched Credential were changed
     </td>
   </tr>
   <tr> 
@@ -475,6 +478,7 @@ indy_prover_get_credentials_for_proof_req(
                    err: ErrorCode,
                    credentials_json: *const c_char))
         </pre>
+        <b>Note</b>: The formats of Proof Request and Matched Credential were changed
     </td>
   </tr>
   <tr> 
@@ -516,6 +520,7 @@ indy_prover_create_proof(
                err: ErrorCode,
                proof_json: *const c_char))
         </pre>
+        <b>Note</b>: The formats of Proof Request, Requested Credentials and Proof were changed
     </td>
   </tr>
   <tr> 
@@ -554,6 +559,7 @@ indy_verifier_verify_proof(
                    err: ErrorCode,
                    valid: bool))
         </pre>
+        <b>Note</b>: The formats of Proof Request and Proof were changed
     </td>
   </tr>
   <tr> 
@@ -610,6 +616,52 @@ indy_update_revocation_state(
     </td>
   </tr>
 </table>
+
+
+### Blob Storage API mapping
+CL revocation schema introduces Revocation Tails entity used to hide information about revoked credential.
+Tails are static information that may require huge amount of data and stored outside of Libindy wallet. 
+A way how to access tails blobs can be very application specific. 
+To access this Libindy 1.4.0 provides new Blob Storage API.
+
+<table>  
+  <th>v1.4.0 - Blob Storage API</th>
+  <tr>
+    <td>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/blob_storage.rs#L12">
+            Open Blob Storage reader
+        </a>
+    </td>
+    <td>
+      <pre>
+indy_open_blob_storage_reader(
+                command_handle: i32,
+                type_: *const c_char,
+                config_json: *const c_char,
+                cb: fn(command_handle_: i32, 
+                       err: ErrorCode, 
+                       handle: i32))
+        </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <a href="https://github.com/hyperledger/indy-sdk/blob/master/libindy/src/api/blob_storage.rs#L12">
+            Open Blob Storage writer
+        </a>
+    </td>
+    <td>
+      <pre>
+indy_open_blob_storage_writer(command_handle: i32,
+                              type_: *const c_char,
+                              config_json: *const c_char,
+                              cb: fn(command_handle_: i32,
+                                     err: ErrorCode, 
+                                     handle: i32))
+        </pre>
+    </td>
+  </tr>
+</table>   
 
 
 ### Ledger API mapping
