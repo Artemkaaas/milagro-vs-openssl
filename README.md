@@ -11,9 +11,1072 @@ Functions from v1.3.0 are listed in the left column, and the equivalent 1.4.0 fu
 Some function were whether added or deleted or can take different parameters or return different data.
 If there is not any changes for some function, the symbol '=' will be placed in the right column.
 
+* [Anoncreds API](#anoncreds-api-mapping)
+* [Ledger API](#ledger-api-mapping)
 * [Signus API](#signus-api-mapping)
 * [Crypto API](#crypto-api-mapping)
 * [Agent API](#agent-api-mapping)
+* [Pairwise API](#pairwise-api-mapping)
+* [Pool API](#pool-api-mapping)
+* [Wallet API](#wallet-api-mapping)
+
+
+
+### Anoncreds API mapping
+Anoncreds API is the most affected part of Libindy. 
+
+The full Anoncreds design can be found here: 
+
+There are three main types of changes:
+* Improved support of Revocation 
+* Changed params of some functions to avoid persisting in wallet intermediate steps entities
+* Changed format of some input and output objects such as filter, proof request, credential info and etc to use different identifiers for public entities:
+    * Schema - id in the format ```did | marker | name | version``` instead of triple ```name, version, did``` 
+    * Credential Definition - id in the format ```did | marker | signatureType | schemaID``` instead of pair ```did, schema_key```
+    * Revocation Registry - id in the format ```did | marker | credDefID | revocDefType | revocDefTag``` instead of ```seqNo```
+
+<table>  
+  <th>v1.3.0 - Anoncreds API</th>
+  <th>v1.4.0 - Anoncreds API</th>
+  <tr> 
+    <th colspan="2">
+Issuer create credential schema    
+    </th>
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_issuer_create_schema(
+            command_handle: i32,
+            issuer_did: *const c_char,
+            name: *const c_char,
+            version: *const c_char,
+            attrs: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   schema_id: *const c_char, 
+                   schema_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Issuer create credential definition for the given Schema
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_issuer_create_and_store_claim_def(
+        command_handle: i32,
+        wallet_handle: i32,
+        issuer_did: *const c_char,
+        schema_json: *const c_char,
+        signature_type: *const c_char,
+        create_non_revoc: bool,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               claim_def_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_issuer_create_and_store_credential_def(
+        command_handle: i32,
+        wallet_handle: i32,
+        issuer_did: *const c_char,
+        schema_json: *const c_char,
+        tag: *const c_char,
+        type_: *const c_char,
+        config_json: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               cred_def_id: *const c_char,
+               cred_def_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Issuer create a new revocation registry for the given Credential Definition 
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_issuer_create_and_store_revoc_reg(
+        command_handle: i32,
+        wallet_handle: i32,
+        issuer_did: *const c_char,
+        schema_seq_no: i32,
+        max_claim_num: i32,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               revoc_reg_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_issuer_create_and_store_revoc_reg(
+        command_handle: i32,
+        wallet_handle: i32,
+        issuer_did: *const c_char,
+        type_: *const c_char,
+        tag: *const c_char,
+        cred_def_id: *const c_char,
+        config_json: *const c_char,
+        tails_writer_handle: i32,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               revoc_reg_id: *const c_char,
+               revoc_reg_def_json: *const c_char,
+               revoc_reg_entry_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Issuer create credential offer
+   </th>
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_issuer_create_credential_offer(
+        command_handle: i32,
+        wallet_handle: i32,
+        cred_def_id: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               cred_offer_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Issuer issue Credential for the given Credential Request
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_issuer_create_claim(
+    command_handle: i32,
+    wallet_handle: i32,
+    claim_req_json: *const c_char,
+    claim_json: *const c_char,
+    user_revoc_index: i32,
+    cb: fn(xcommand_handle: i32, 
+           err: ErrorCode,
+           revoc_reg_update_json: *const c_char,
+           xclaim_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_issuer_create_credential(
+        command_handle: i32,
+        wallet_handle: i32,
+        cred_offer_json: *const c_char,
+        cred_req_json: *const c_char,
+        cred_values_json: *const c_char,
+        rev_reg_id: *const c_char,
+        blob_storage_reader_handle: i32,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               cred_json: *const c_char,
+               cred_revoc_id: *const c_char,
+               revoc_reg_delta_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Issuer revoke a credential
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_issuer_revoke_claim(
+    command_handle: i32,
+    wallet_handle: i32,
+    issuer_did: *const c_char,
+    schema_seq_no: i32,
+    user_revoc_index: i32,
+    cb: fn(xcommand_handle: i32, 
+           err: ErrorCode,
+           revoc_reg_update_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_issuer_revoke_credential(
+        command_handle: i32,
+        wallet_handle: i32,
+        blob_storage_reader_cfg_handle: i32,
+        rev_reg_id: *const c_char,
+        cred_revoc_id: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               revoc_reg_delta_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Issuer merge two revocation registry deltas
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_issuer_merge_revocation_registry_deltas(
+        command_handle: i32,
+        rev_reg_delta_json: *const c_char,
+        other_rev_reg_delta_json: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               merged_rev_reg_delta: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover stores a claim offer from the given issuer in a secure storage.
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_prover_store_claim_offer(
+            command_handle: i32,
+            wallet_handle: i32,
+            claim_offer_json: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode))
+        </pre>
+    </td>
+    <td>
+      <b>DELETED</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover gets all stored claim offers
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_prover_get_claim_offers(
+        command_handle: i32,
+        wallet_handle: i32,
+        filter_json: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               claim_offers_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <b>DELETED</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover creates a master secret
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_prover_create_master_secret(
+                command_handle: i32,
+                wallet_handle: i32,
+                master_secret_name: *const c_char,
+                cb: fn(xcommand_handle: i32, 
+                       err: ErrorCode))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_prover_create_master_secret(
+        command_handle: i32,
+        wallet_handle: i32,
+        master_secret_id: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               out_master_secret_id: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover creates a Credential Request for the given credential offer
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_prover_create_and_store_claim_req(
+            command_handle: i32,
+            wallet_handle: i32,
+            prover_did: *const c_char,
+            claim_offer_json: *const c_char,
+            claim_def_json: *const c_char,
+            master_secret_name: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   claim_req_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_prover_create_credential_req(
+        command_handle: i32,
+        wallet_handle: i32,
+        prover_did: *const c_char,
+        cred_offer_json: *const c_char,
+        cred_def_json: *const c_char,
+        master_secret_id: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               cred_req_json: *const c_char,
+               cred_req_metadata_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover stores Credential in a secure wallet
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_prover_store_claim(
+                command_handle: i32,
+                wallet_handle: i32,
+                claims_json: *const c_char,
+                cb: fn(xcommand_handle: i32, 
+                       err: ErrorCode))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_prover_store_credential(
+            command_handle: i32,
+            wallet_handle: i32,
+            cred_id: *const c_char,
+            cred_req_json: *const c_char,
+            cred_req_metadata_json: *const c_char,
+            cred_json: *const c_char,
+            cred_def_json: *const c_char,
+            rev_reg_def_json: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   out_cred_id: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover gets human readable claims according to the filter
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_prover_get_claims(
+            command_handle: i32,
+            wallet_handle: i32,
+            filter_json: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   claims_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+<b>The formats of input filter and output credentials were changed</b>
+      <pre>
+indy_prover_get_credentials(
+        command_handle: i32,
+        wallet_handle: i32,
+        filter_json: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               matched_credentials_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover gets human readable credentials matching the given proof request.
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_prover_get_claims_for_proof_req(
+            command_handle: i32,
+            wallet_handle: i32,
+            proof_request_json: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   claims_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_prover_get_credentials_for_proof_req(
+            command_handle: i32,
+            wallet_handle: i32,
+            proof_request_json: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   credentials_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Prover creates a proof according to the given proof request
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+fn indy_prover_create_proof(
+        command_handle: i32,
+        wallet_handle: i32,
+        proof_req_json: *const c_char,
+        requested_claims_json: *const c_char,
+        schemas_json: *const c_char,
+        master_secret_name: *const c_char,
+        claim_defs_json: *const c_char,
+        revoc_regs_json: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               proof_json: *const c_char))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_prover_create_proof(
+        command_handle: i32,
+        wallet_handle: i32,
+        proof_req_json: *const c_char,
+        requested_credentials_json: *const c_char,
+        master_secret_id: *const c_char,
+        schemas_json: *const c_char,
+        credential_defs_json: *const c_char,
+        rev_states_json: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               proof_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Verifier verifies a proof
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_verifier_verify_proof(
+            command_handle: i32,
+            proof_request_json: *const c_char,
+            proof_json: *const c_char,
+            schemas_json: *const c_char,
+            claim_defs_jsons: *const c_char,
+            revoc_regs_json: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   valid: bool))
+        </pre>
+    </td>
+    <td>
+      <pre>
+indy_verifier_verify_proof(
+            command_handle: i32,
+            proof_request_json: *const c_char,
+            proof_json: *const c_char,
+            schemas_json: *const c_char,
+            credential_defs_json: *const c_char,
+            rev_reg_defs_json: *const c_char,
+            rev_regs_json: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   valid: bool))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Create revocation state for a credential in the particular time moment.
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_create_revocation_state(
+        command_handle: i32,
+        blob_storage_reader_handle: i32,
+        rev_reg_def_json: *const c_char,
+        rev_reg_delta_json: *const c_char,
+        timestamp: u64,
+        cred_rev_id: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               rev_state_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Create new revocation state for a credential based on existed state at the particular time moment
+   </th>
+  </tr>
+  <tr>
+    <td>
+      <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_update_revocation_state(
+        command_handle: i32,
+        blob_storage_reader_handle: i32,
+        rev_state_json: *const c_char,
+        rev_reg_def_json: *const c_char,
+        rev_reg_delta_json: *const c_char,
+        timestamp: u64,
+        cred_rev_id: *const c_char,
+        cb: fn(xcommand_handle: i32,
+               err: ErrorCode,
+               updated_rev_state_json: *const c_char))
+        </pre>
+    </td>
+  </tr>
+</table>
+
+
+### Ledger API mapping
+There are four types of changes in Ledger API:
+** Added new transaction builders for Revocation support
+** Added new transaction builders for Node support
+** Added parsers of transaction responses related to Anoncreds API
+** Changed format of some transaction builders
+
+<table>  
+  <th>v1.3.0 - Ledger API</th>
+  <th>v1.4.0 - Ledger API</th>
+  <tr> 
+    <th colspan="2">
+      Builds a SCHEMA request. Request to add Credential's schema.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_build_schema_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            data: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+    <td>
+Left the same but the format of data has been changed to:
+<pre>
+{
+    id: identifier of schema
+    attrNames: array of attribute name strings
+    name: Schema's name string
+    version: Schema's version string,
+    ver: version of the Schema json
+}
+</pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+      Builds a GET_SCHEMA request. Request to get Credential's Schema.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_build_get_schema_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            dest: *const c_char,
+            data: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+    <td>
+      <pre>
+indy_build_get_schema_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            id: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+      Parse a GET_SCHEMA response to get Schema in the format compatible with Anoncreds API.
+    </th>
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_parse_get_schema_response(
+            command_handle: i32,
+            get_schema_response: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   schema_id: *const c_char,
+                   schema_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds an CRED_DEF request. Request to add a Credential Definition.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_build_claim_def_txn(
+        command_handle: i32,
+        submitter_did: *const c_char,
+        xref: i32,
+        signature_type: *const c_char,
+        data: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               request_result_json: *const c_char))
+              </pre>
+    </td>
+    <td>
+      <pre>
+indy_build_cred_def_request(
+        command_handle: i32,
+        submitter_did: *const c_char,
+        data: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               request_result_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a GET_CRED_DEF request. Request to get a Credential Definition.
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <pre>
+indy_build_get_claim_def_txn(
+        command_handle: i32,
+        submitter_did: *const c_char,
+        xref: i32,
+        signature_type: *const c_char,
+        origin: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               request_json: *const c_char))
+              </pre>
+    </td>
+    <td>
+      <pre>
+indy_build_get_cred_def_request(
+        command_handle: i32,
+        submitter_did: *const c_char,
+        id: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               request_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Parse a GET_CRED_DEF response to get Credential Definition in the format compatible with Anoncreds API.    </th>
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_parse_get_cred_def_response(
+        command_handle: i32,
+        get_cred_def_response: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               cred_def_id: *const c_char,
+               cred_def_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a POOL_CONFIG request. Request to change Pool's configuration.
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_build_pool_config_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            writes: bool,
+            force: bool,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a POOL_UPGRADE request. Request to upgrade the Pool (sent by Trustee)
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_build_pool_upgrade_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            name: *const c_char,
+            version: *const c_char,
+            action: *const c_char,
+            sha256: *const c_char,
+            timeout: i32,
+            schedule: *const c_char,
+            justification: *const c_char,
+            reinstall: bool,
+            force: bool,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a REVOC_REG_DEF request. Request to add the definition of revocation registry to an exists Credential Definition.
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_build_revoc_reg_def_request(
+        command_handle: i32,
+        submitter_did: *const c_char,
+        data: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               rev_reg_def_req: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a GET_REVOC_REG_DEF request. Request to get a Revocation Registry Definition  
+  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_build_get_revoc_reg_def_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            id: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+  </tr> 
+  <tr> 
+    <th colspan="2">
+Parse a GET_REVOC_REG_DEF response to get Revocation Registry Definition in the format compatible with Anoncreds API.  </tr>
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_parse_get_revoc_reg_def_response(
+        command_handle: i32,
+        get_revoc_reg_def_response: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               revoc_reg_def_id: *const c_char,
+               revoc_reg_def_json: *const c_char))
+              </pre>
+    </td>
+  </tr> 
+  <tr> 
+    <th colspan="2">
+Builds a REVOC_REG_ENTRY request.  Request to add the Revocation Registry Entry record containing the new accumulator value and issued/revoked indices.
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_build_revoc_reg_entry_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            revoc_reg_def_id: *const c_char,
+            rev_def_type: *const c_char,
+            value: *const c_char,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a GET_REVOC_REG request. Request to get the accumulated state of the Revocation Registry in a particular time
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_build_get_revoc_reg_request(
+            command_handle: i32,
+            submitter_did: *const c_char,
+            revoc_reg_def_id: *const c_char,
+            timestamp: i64,
+            cb: fn(xcommand_handle: i32, 
+                   err: ErrorCode,
+                   request_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Parse a GET_REVOC_REG response to get Revocation Registry in the format compatible with Anoncreds API.
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_parse_get_revoc_reg_response(
+        command_handle: i32,
+        get_revoc_reg_response: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               revoc_reg_def_id: *const c_char,
+               revoc_reg_json: *const c_char,
+               timestamp: u64))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a GET_REVOC_REG_DELTA request. Request to get the delta of the accumulated state of the Revocation Registry.
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_build_get_revoc_reg_delta_request(
+        command_handle: i32,
+        submitter_did: *const c_char,
+        revoc_reg_def_id: *const c_char,
+        from: i64,
+        to: i64,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+                request_json: *const c_char))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Parse a GET_REVOC_REG_DELTA response to get Revocation Registry Delta in the format compatible with Anoncreds API.
+  <tr>
+    <td>
+        <b>NEW</b>
+    </td>
+    <td>
+      <pre>
+indy_parse_get_revoc_reg_delta_response(
+        command_handle: i32,
+        get_revoc_reg_delta_response: *const c_char,
+        cb: fn(xcommand_handle: i32, 
+               err: ErrorCode,
+               revoc_reg_def_id: *const c_char,
+               revoc_reg_delta_json: *const c_char,
+               timestamp: u64))
+              </pre>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Signs and submits request message to validator pool.
+  <tr>
+    <td>
+      <pre>
+indy_sign_and_submit_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Send request message to validator pool
+  <tr>
+    <td>
+      <pre>
+indy_submit_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Signs request message
+  <tr>
+    <td>
+      <pre>
+indy_sign_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a NYM request. Request to create a new NYM record for a specific user.
+  <tr>
+    <td>
+      <pre>
+indy_build_nym_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a GET_NYM request. Request to get information about a DID (NYM).
+  <tr>
+    <td>
+      <pre>
+indy_build_get_nym_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds an ATTRIB request. Request to add attribute to a NYM record.
+  <tr>
+    <td>
+      <pre>
+indy_build_attrib_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a GET_ATTRIB request. Request to get information about an Attribute for the specified DID.
+  <tr>
+    <td>
+      <pre>
+indy_build_get_attrib_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a NODE request. Request to add a new node to the pool, or updates existing in the pool.
+  <tr>
+    <td>
+      <pre>
+indy_build_node_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+  <tr> 
+    <th colspan="2">
+Builds a GET_TXN request. Request to get any transaction by its seq_no.
+  <tr>
+    <td>
+      <pre>
+indy_build_get_txn_request(...)
+       </pre>
+    </td>
+    <td>
+      <b>=</b>
+    </td>
+  </tr>
+</table>                                  
+
+
 
 ### Signus API mapping
 The most significant change of this part is renaming Signus API to Did API. 
@@ -557,7 +1620,7 @@ indy_crypto_anon_decrypt(
 </table>
 
 ### Agent API mapping
-The Agent API file was deleted from Libindy but his functionality was simplified and moved to Crypto API.
+The Agent API was completely deleted from Libindy but its functionality in simplified form was saved as part of Crypto API.
 
 <table>  
   <th>v1.3.0 - Agent API</th>
@@ -653,7 +1716,8 @@ indy_parse_msg(command_handle: i32,
     </td>
     <td>
       <pre>
-indy_crypto_auth_decrypt(command_handle: i32,
+Decrypt a message by authenticated-encryption scheme.
+Reverse to <i>indy_crypto_auth_crypt</i><hr>indy_crypto_auth_decrypt(command_handle: i32,
                          wallet_handle: i32,
                          my_vk: *const c_char,
                          encrypted_msg: *const u8,
@@ -669,7 +1733,8 @@ indy_crypto_auth_decrypt(command_handle: i32,
   <tr>
     <td>
       <pre>
-indy_crypto_anon_decrypt(command_handle: i32,
+Decrypts a message by anonymous-encryption scheme.
+Reverse to <i>indy_crypto_anon_crypt</i><hr>indy_crypto_anon_decrypt(command_handle: i32,
                          wallet_handle: i32,
                          my_vk: *const c_char,
                          encrypted_msg: *const u8,
@@ -682,3 +1747,12 @@ indy_crypto_anon_decrypt(command_handle: i32,
     </td>
   </tr>
 </table>                                  
+
+### Pairwise API mapping
+The Agent API does not have any changes.
+
+### Pool API mapping
+The Pool API does not have any changes.
+
+### Wallet API mapping
+The Wallet API does not have any changes.
