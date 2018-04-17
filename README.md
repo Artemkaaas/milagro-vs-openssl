@@ -1,20 +1,32 @@
 # Libindy migration Guide
 
+## A Developer Guide for Libindy migration
+
 There are a lot APIs that have been changed in Libindy 1.4.0.
 This document is written for developers using Libindy 1.3.0 to provide necessary information 
-to simplify transition and to introduce new features.
+to simplify transition and to introduce to new features of Libindy 1.4.0.
 
-In the following tables for each API part, there are mappings of how 1.3.0 functionality maps to 1.4.0. 
+In the following tables for each Libindy API part, there are mappings of how 1.3.0 functionality maps to 1.4.0. 
 Functions from v1.3.0 are listed in the left column, and the equivalent 1.4.0 function are placed in the right column. 
-Some function can take different parameters or return different data.
+Some function were whether added or deleted or can take different parameters or return different data.
 If there is not any changes for some function, the symbol '=' will be placed in the right column.
 
+* [Signus API](#signus-api-mapping)
+* [Crypto API](#crypto-api-mapping)
+* [Agent API](#agent-api-mapping)
+
 ### Signus API mapping
-The Signus API was renamed to Did API.
+The most significant change of this part is renaming Signus API to Did API. 
+Furthermore, some functions of Signus API were deleted because the same goals can be achieved by using a combination of others.
 
 <table>  
   <th>v1.3.0 - Signus API</th>
   <th>v1.4.0 - Crypto API</th>
+   <tr> 
+     <th colspan="2">
+       Signs a message
+     </th>
+   </tr>
    <tr>
      <td>
        <pre>
@@ -22,12 +34,12 @@ indy_sign(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b> <span>(use indy_crypto_sign based on keys instead)</span>
+       <b>DELETED</b> <span>(use combination of either <i>did.indy_key_for_did</i> or <i>did.indy_key_for_local_did</i> with <i>crypto.indy_crypto_sign</i> instead)</span>
      </td>
    </tr>
    <tr> 
      <th colspan="2">
-         Verify a signature created by a key associated with a DID
+         Verify a signature
      </th>
    </tr>
    <tr>
@@ -37,12 +49,12 @@ indy_verify_signature(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b> <span>(use indy_crypto_verify based on keys instead)</span>
+       <b>DELETED</b> <span>(use combination of either <i>did.indy_key_for_did</i> or <i>did.indy_key_for_local_did</i> with <i>crypto.indy_crypto_verify</i> instead)</span>
      </td>
    </tr>
    <tr> 
      <th colspan="2">
-         Encrypts a message by public-key (associated with their did) authenticated-encryption scheme
+         Encrypts a message
      </th>
    </tr>
    <tr>
@@ -52,12 +64,12 @@ indy_encrypt(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b> <span>(use indy_crypto_auth_crypt based on keys instead)</span>
+       <b>DELETED</b> <span>(use combination of either <i>did.indy_key_for_did</i> or <i>did.indy_key_for_local_did</i> with <i>crypto.indy_crypto_auth_crypt</i> instead)</span>
      </td>
    </tr>
    <tr> 
      <th colspan="2">
-         Decrypts a message by public-key authenticated-encryption scheme using nonce
+         Decrypts a message
      </th>
    </tr>
    <tr>
@@ -67,12 +79,12 @@ indy_decrypt(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b> <span>(use indy_crypto_auth_decrypt based on keys instead)</span>
+       <b>DELETED</b> <span>(use combination of either <i>did.indy_key_for_did</i> or <i>did.indy_key_for_local_did</i> with <i>crypto.indy_crypto_auth_decrypt</i> instead)</span>
      </td>
    </tr>
    <tr> 
      <th colspan="2">
-         Encrypts a message by public-key (associated with did) anonymous-encryption scheme
+         Encrypts a message by anonymous-encryption scheme
      </th>
    </tr>
    <tr>
@@ -82,12 +94,12 @@ indy_encrypt_sealed(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b> <span>(use indy_crypto_anon_crypt based on keys instead)</span>
+       <b>DELETED</b> <span>(use combination of either <i>did.indy_key_for_did</i> or <i>did.indy_key_for_local_did</i> with <i>crypto.indy_crypto_anon_crypt</i> instead)</span>
      </td>
    </tr>
    <tr> 
      <th colspan="2">
-         Decrypts a message by public-key anonymous-encryption scheme
+         Decrypts a message by anonymous-encryption scheme
      </th>
    </tr>
    <tr>
@@ -97,7 +109,7 @@ indy_decrypt_sealed(...)
                </pre>
      </td>
      <td>
-       <b>DELETED</b> <span>(use indy_crypto_anon_decrypt based on keys instead)</span>
+       <b>DELETED</b> <span>(use combination of either <i>did.indy_key_for_did</i> or <i>did.indy_key_for_local_did</i> with <i>crypto.indy_crypto_anon_decrypt</i> instead)</span>
      </td>
    </tr>
    <tr> 
